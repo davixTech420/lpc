@@ -1,24 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
-
+import {BrowserRouter, Navigate, Route,Routes} from 'react-router-dom';
+import { ClientRoutes, PublicRoutes } from './routes/Routes';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    //creamos las rutas principales de la web luego  importamos
+    //el archivop de las rutas la cual contiene ya cada ruta en especifico 
+   <BrowserRouter>
+      <Routes>
+        <Route path='/' element={ <Navigate to="/welcome" /> }></Route>
+        <Route  path='*' element={ <PublicRoutes /> }></Route>
+        <Route path='/cliente/**' element={<ClientRoutes />}></Route>
+      </Routes>
+      </BrowserRouter>
+   
   );
 }
 
