@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Typography, TextField } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+} from "@mui/material";
 import { IconButton, Button } from "@mui/material";
 import HeaderPublic from "../../partials/HeaderPublic";
 import FooterPublic from "../../partials/FooterPublic";
-
 import {
-  clienteLogeado,
+  clienteLogeado, actualizarCliente , MiShows,
   getClienForm,
 } from "../../../services/ClienteServices";
 import { Chip, Paper, LinearProgress, Tooltip } from "@mui/material";
@@ -13,8 +17,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { motion, AnimatePresence } from "framer-motion";
 import EditIcon from "@mui/icons-material/Edit";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import WorkIcon from "@mui/icons-material/Work";
-import SchoolIcon from "@mui/icons-material/School";
 import MailIcon from "@mui/icons-material/Mail";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -75,29 +77,58 @@ export default function ProfileViewInteractive() {
     nacionCliente: "",
     direccion: "",
   });
+  const [formData, setFormData] = useState({
+   /*  nombre: cliente.nombre,
+    apellido: cliente.apellido,
+    tipIdentidad: cliente.tipIdentidad,
+    identificacion: cliente.identificacion, */
+    telefono: "",
+    email: "",
+    password: cliente.password,
+    estado: true,
+    nacionCliente: datosAdicionales.nacionCliente,
+    direccion: datosAdicionales.direccion,
+  });
+  const [Shows, setShows] = useState({});
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCliente((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
+
 
   useEffect(() => {
     try {
       const clienLogi = async () => {
         const respoClien = await clienteLogeado();
         setCliente(respoClien.data);
+        const vistaDash = await MiShows(respoClien.data.id);
+        setShows(vistaDash);
+        console.log(vistaDash);
+        
         const resClienForm = await getClienForm(respoClien.data.id);
         setDatosAdicionales(resClienForm.data);
+
+        /* establecemos los datos que van en el fromulario lo que envia a a la bd puede ir cambiando */
+        setFormData({
+          /*  nombre: cliente.nombre,
+           apellido: cliente.apellido,
+           tipIdentidad: cliente.tipIdentidad,
+           identificacion: cliente.identificacion, */
+           telefono: respoClien.data.telefono,
+           email: respoClien.data.email,
+         
+           estado: true,
+           nacionCliente: resClienForm.data.nacionCliente,
+           direccion: resClienForm.data.direccion,
+         });
+        
+         /**
+          * 
+          * 
+          */
       };
       clienLogi();
     } catch (error) {
       console.log(error);
     }
   }, []);
-
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     name: "Jane Doe",
@@ -116,25 +147,29 @@ export default function ProfileViewInteractive() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProfileData((prevData) => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
   };
 
-  const handleSkillsChange = (e) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      skills: e.target.value.split(",").map((skill) => skill.trim()),
-    }));
-  };
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    try{
+const enviar = actualizarCliente(cliente.id,formData);
+
+      console.log(enviar);
+    }catch(error){
+console.log(error);
+    }
+    
+    
     setIsEditing(false);
   };
 
-  console.log(datosAdicionales);
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -178,12 +213,8 @@ export default function ProfileViewInteractive() {
                   >
                     <Chip
                       icon={<LocationOnIcon />}
-                       
-                      
                       label={datosAdicionales.nacionCliente}
                     />
-                    <Chip icon={<WorkIcon />} label={profileData.company} />
-                    <Chip icon={<SchoolIcon />} label={profileData.education} />
                   </Box>
                 </Grid>
                 <Grid item>
@@ -213,7 +244,16 @@ export default function ProfileViewInteractive() {
                           label="Name"
                           name="name"
                           value={cliente.nombre}
-                          onChange={handleInputChange}
+                         
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          label="Name"
+                          name="name"
+                          value={cliente.apellido}
+                        
                         />
                       </Grid>
 
@@ -222,7 +262,7 @@ export default function ProfileViewInteractive() {
                           fullWidth
                           label="nacionCliente"
                           name="nacionCliente"
-                          value={datosAdicionales.nacionCliente}
+                          value={formData.nacionCliente}
                           onChange={handleInputChange}
                         />
                       </Grid>
@@ -231,39 +271,29 @@ export default function ProfileViewInteractive() {
                           fullWidth
                           label="direccion"
                           name="direccion"
-                          value={datosAdicionales.direccion}
+                          value={formData.direccion}
                           onChange={handleInputChange}
                         />
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
-                          label="Education"
-                          name="education"
-                          value={profileData.education}
+                          label="telefono"
+                          name="telefono"
+                          value={formData.telefono}
                           onChange={handleInputChange}
                         />
                       </Grid>
-                      <Grid item xs={12}>
+                      <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
-                          multiline
-                          rows={4}
-                          label="Bio"
-                          name="bio"
-                          value={profileData.bio}
+                          label="email"
+                          name="email"
+                          value={formData.email}
                           onChange={handleInputChange}
                         />
                       </Grid>
-                      <Grid item xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Skills (comma-separated)"
-                          name="skills"
-                          value={profileData.skills.join(", ")}
-                          onChange={handleSkillsChange}
-                        />
-                      </Grid>
+                      
                       <Grid item xs={12}>
                         <Button
                           type="submit"
@@ -283,7 +313,8 @@ export default function ProfileViewInteractive() {
                     transition={{ duration: 0.3 }}
                   >
                     <Typography variant="body1" paragraph sx={{ mt: 2 }}>
-                      {profileData.bio}
+                      Bienvenido{" "}
+                      {cliente.nombre + " Puedes Actualizar Tus Datos Aqui"}
                     </Typography>
 
                     <Box sx={{ mb: 3 }}>
