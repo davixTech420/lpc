@@ -36,7 +36,6 @@ import {
   Alert,
 } from "@mui/material";
 import { jwtDecode } from "jwt-decode";
-import { format, parse } from "date-fns";
 import { Card, CardContent, Typography } from "@mui/material";
 
 const localizer = momentLocalizer(moment);
@@ -226,9 +225,6 @@ function Calendario() {
     }
   };
 
-  
- 
-
   const handleSubmit = async (e) => {
     console.log(formData);
     try {
@@ -255,7 +251,7 @@ function Calendario() {
     return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`; // Retorna en formato YYYY-MM-DD
   };
 
- /*  useEffect(() => {
+  /*  useEffect(() => {
     const prueba = () => {
     setFormData({
       ...formData,
@@ -480,7 +476,10 @@ function Calendario() {
                         }}
                         value={formData.cuposDisponibles}
                         onChange={(e) => {
-                          if (e.target.value.length < 5 && e.target.value >= 0) {
+                          if (
+                            e.target.value.length < 5 &&
+                            e.target.value >= 0
+                          ) {
                             setFormData({
                               ...formData,
                               cuposDisponibles: e.target.value,
@@ -504,10 +503,13 @@ function Calendario() {
                         required
                         fullWidth
                         value={convertToDateInputFormat(fechaSeleccionada)}
-                        onClick={() => setFormData({
-                          ...formData,
-                          fechaPresentar: convertToDateInputFormat(fechaSeleccionada),
-                        })}
+                        onClick={() =>
+                          setFormData({
+                            ...formData,
+                            fechaPresentar:
+                              convertToDateInputFormat(fechaSeleccionada),
+                          })
+                        }
                         InputProps={{
                           readOnly: true,
                         }}
@@ -517,7 +519,6 @@ function Calendario() {
                         label="fechaPresentar"
                         name="fechaPresentar"
                       />
-                      
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
@@ -539,19 +540,38 @@ function Calendario() {
                       />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                      <TextField
-                        required
-                        fullWidth
-                        value={formData.horaFin}
-                        onChange={(e) =>
-                          setFormData({ ...formData, horaFin: e.target.value })
-                        }
-                        type="time"
-                        id="horaFin"
-                        variant="filled"
-                        label="horaFin"
-                        name="horaFin"
-                      />
+                    <TextField
+    required
+    fullWidth
+    value={formData.horaFin}
+    onChange={(e) => {
+      const horaInicio = formData.horaInicio;
+      const horaFin = e.target.value;
+
+      if (horaInicio && horaFin) {
+        // Convertir ambas horas a minutos para fácil comparación
+        const [horaInicioHoras, horaInicioMinutos] = horaInicio.split(":");
+        const [horaFinHoras, horaFinMinutos] = horaFin.split(":");
+
+        const totalMinutosInicio = parseInt(horaInicioHoras) * 60 + parseInt(horaInicioMinutos);
+        const totalMinutosFin = parseInt(horaFinHoras) * 60 + parseInt(horaFinMinutos);
+
+        // Validar que horaFin sea mayor a horaInicio
+        if (totalMinutosFin > totalMinutosInicio) {
+          setFormData({ ...formData, horaFin: horaFin });
+        } else {
+          setErrorFormu("La hora de fin debe ser posterior a la hora de inicio");
+        }
+      } else {
+        setFormData({ ...formData, horaFin: horaFin });
+      }
+    }}
+    type="time"
+    id="horaFin"
+    variant="filled"
+    label="Hora Fin"
+    name="horaFin"
+  />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -581,12 +601,26 @@ function Calendario() {
                         required
                         fullWidth
                         value={formData.empleadosRequeridos}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            empleadosRequeridos: e.target.value,
-                          })
-                        }
+                        onKeyPress={(e) => {
+                          if (!/[0-9]/.test(e.key)) {
+                            e.preventDefault();
+                          }
+                        }}
+                        onChange={(e) => {
+                          if (
+                            e.target.value.length < 3 &&
+                            e.target.value >= 0 
+                          ) {
+                            setFormData({
+                              ...formData,
+                              empleadosRequeridos: e.target.value,
+                            });
+                          }
+                        }}
+                        inputProps={{
+                          maxLength: 2,
+
+                        }}
                         type="number"
                         id="empleadosRequeridos"
                         variant="filled"

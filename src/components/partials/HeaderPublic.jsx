@@ -266,9 +266,9 @@ onClick={() => nav("/contacto") }
                     Mensajes
                   </MenuItem>
                   <MenuItem   onClick={() => {    rol === 'jefesala' ?  nav("/jefe/miSala"): nav("/cliente/misShows") }}  sx={{ ":hover": { color: "white" ,backgroundColor:'#07575B' } }}>
-                  <Typography variant="body2" >
-                  {rol == "jefesala" ? "Mi Sala"  : "Mis Shows" }
-                  </Typography>
+                 
+                  {rol === "jefesala" ? "Mi Sala"  : "Mis Shows" }
+         
                   </MenuItem>
                   <Divider />
                   <MenuItem sx={{ alineItems: 'center', justifyContent: 'center'}}>
