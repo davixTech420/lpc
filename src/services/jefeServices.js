@@ -4,7 +4,22 @@ import axios from "axios";
 const baseUrl = "http://localhost:3001/api/jefe";
 
 
-
+export const activarPedido = (id) => {
+  return axios.put(`${baseUrl}/pedido/${id}`,{},{
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    }
+  }
+);
+}
+export const eliminarPedido = (id) => {
+  return axios.delete(`${baseUrl}/pedido/${id}`,{
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    }
+  }
+);
+}
 
 export const getPedidoForm = (id) => {
   return axios.get(`${baseUrl}/pedido/${id}`,{

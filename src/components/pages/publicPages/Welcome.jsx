@@ -18,7 +18,10 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Carousel from "react-material-ui-carousel";
 import Map from "../component/Map";
-import { getShows, getSalasId } from "../../../services/publicServices";
+import { getShows, getSalasId,SrcImagen } from "../../../services/publicServices";
+
+
+const AnimatedTypography = motion(Typography);
 
 /* esta es la vista de inicio */
 
@@ -145,7 +148,7 @@ const goGoogleMaps = () => {
                 >
                   <Box
                     component="img"
-                    src={item.imagen}
+                    src={SrcImagen(item.imagen)}
                     alt={`carousel-item-${index}`}
                     sx={{
                       boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.5)",
@@ -248,7 +251,7 @@ const goGoogleMaps = () => {
                 alignContent: "center",
               }}
             >
-              <CardContent sx={{ textAlign: "center" }}>
+              <CardContent sx={{ textAlign: "center",p:20 }}>
                 <Typography
                   sx={{ textAlign: "center" }}
                   variant="h5"
@@ -267,6 +270,9 @@ const goGoogleMaps = () => {
                 <br />
                 
               </CardContent>
+
+
+              
             </Card>
 
             <Card
@@ -281,7 +287,7 @@ const goGoogleMaps = () => {
             >
               <CardMedia
                 component="img"
-                image={nextShow?.imagen}
+                image={SrcImagen(nextShow?.imagen)}
                 alt="Imagen de la tarjeta"
                 sx={{
                   height: "90%",

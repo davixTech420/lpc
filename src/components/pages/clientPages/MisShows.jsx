@@ -19,7 +19,12 @@ import {
   CardActions,
   Button,
   Chip,
+  useMediaQuery,
+  useTheme,
+  IconButton,
 } from '@mui/material';
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import { styled } from '@mui/system';
 import { 
   TheaterComedy, 
@@ -104,6 +109,8 @@ export default function MisShows() {
 const [shows, setShows] = useState([]);
 
 const [logueado, setLogueado] = useState(null);
+const theme = useTheme();
+const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -205,20 +212,50 @@ console.log(error);
             <Typography variant="h5" gutterBottom>
               Próximos Shows Agendados
             </Typography>
-            {showsData.slice(0, 2).map((show) => (
-              <Box key={show.id} sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
-                <Chip 
-                  icon={<Event />} 
-                  label={show.date} 
-                  color="primary" 
-                  variant="outlined" 
-                  sx={{ mr: 2 }}
-                />
-                <Typography variant="body1">
-                  {show.title} - {show.time}
-                </Typography>
-              </Box>
-            ))}
+            {shows
+                  .filter((show) => new Date(show.fechaPresentar) >= new Date())
+                  .map((show) => (
+                    <Box
+                      key={show.id}
+                      sx={{
+                        width: isLargeScreen ? "calc(50% - 16px)" : "100%",
+                        bgcolor: "grey.100",
+                        borderRadius: 2,
+                        p: 2,
+                        mb: 2,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Chip
+                            icon={<Event />}
+                            label={show.fechaPresentar}
+                            color="primary"
+                            variant="outlined"
+                            size="small"
+                            sx={{ mr: 1 }}
+                          />
+                          <Typography variant="body1">
+                            {show.nombre} - {show.horaInicio}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <IconButton size="small">
+                            <DeleteIcon color="error" />
+                          </IconButton>
+                         
+                        </Box>
+                      </Box>
+                      
+                    </Box>
+                    
+                  ))}
           </Box>
         </TabPanel>
       </StyledBox>

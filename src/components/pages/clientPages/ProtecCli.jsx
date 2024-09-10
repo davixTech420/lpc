@@ -89,7 +89,7 @@ export default function ProfileViewInteractive() {
     nacionCliente: datosAdicionales.nacionCliente,
     direccion: datosAdicionales.direccion,
   });
-  const [Shows, setShows] = useState({});
+  const [Shows, setShows] = useState([]);
 
 
 
@@ -361,84 +361,25 @@ console.log(error);
                         Mis Shows
                       </Typography>
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                        {profileData.skills.map((show) => (
-                          <motion.div
-                            key={show.id}
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                          >
-                            <Chip label={show.nombre} />
-                          </motion.div>
-                        ))}
+                      {Shows.length === 0 ? (
+                          <p>No shows available</p>
+                        ) : (
+                          Shows.map((show) => (
+                            <motion.div
+                              key={show.id}
+                              whileHover={{ scale: 1.1 }}
+                              whileTap={{ scale: 0.95 }}
+                            >
+                              <Chip label={show.nombre} />
+                            </motion.div>
+                          ))
+                        )}
                       </Box>
                     </Box>
 
-                    <Box sx={{ mb: 3 }}>
-                      <Typography variant="h6" gutterBottom>
-                        Current Projects
-                      </Typography>
-                      <Grid container spacing={2}>
-                        {profileData.projects.map((project, index) => (
-                          <Grid item xs={12} sm={6} md={4} key={project.name}>
-                            <Tooltip
-                              title={`${project.progress}% Complete`}
-                              arrow
-                            >
-                              <Paper elevation={2} sx={{ p: 2 }}>
-                                <Typography variant="body2" gutterBottom>
-                                  {project.name}
-                                </Typography>
-                                <LinearProgress
-                                  variant="determinate"
-                                  value={project.progress}
-                                  sx={{
-                                    height: 8,
-                                    borderRadius: 4,
-                                    "& .MuiLinearProgress-bar": {
-                                      backgroundColor: "#66A5AD",
-                                    },
-                                  }}
-                                />
-                              </Paper>
-                            </Tooltip>
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Box>
+                
 
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: 2,
-                        mt: 4,
-                      }}
-                    >
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <IconButton color="primary" aria-label="email">
-                          <MailIcon />
-                        </IconButton>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <IconButton color="primary" aria-label="linkedin">
-                          <LinkedInIcon />
-                        </IconButton>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                      >
-                        <IconButton color="primary" aria-label="github">
-                          <GitHubIcon />
-                        </IconButton>
-                      </motion.div>
-                    </Box>
+                    
                   </motion.div>
                 )}
               </AnimatePresence>

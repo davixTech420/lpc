@@ -3,10 +3,11 @@ import {
   getShowsSala,
   getSalaJefe,
   getPedidoForm,
+  activarPedido,
+  eliminarPedido
 } from "../../../services/jefeServices";
 import { jwtDecode } from "jwt-decode";
 import { SrcImagen } from "../../../services/publicServices";
-
 import {
   AppBar,
   Tabs,
@@ -302,7 +303,7 @@ export default function MiSala() {
                           </Typography>
                         </Box>
                         <Box>
-                          <IconButton size="small">
+                          <IconButton  onClick={() => eliminarPedido(show.id) } size="small">
                             <DeleteIcon color="error" />
                           </IconButton>
                           <IconButton
@@ -315,7 +316,9 @@ export default function MiSala() {
                           </IconButton>
                         </Box>
                       </Box>
-                    </Box>
+                      <Button onClick={() => activarPedido(show.id) }>Activar Pedido</Button>  
+                                        </Box>
+                    
                   ))}
                 <AnimatePresence>
                   {editedShowId && (

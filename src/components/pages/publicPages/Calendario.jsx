@@ -6,7 +6,7 @@ import HeaderPublic from "../../partials/HeaderPublic";
 import FooterPublic from "../../partials/FooterPublic";
 import { FormComponent } from "../adminPages/FormComponent";
 import { salasConJefe, crearPedido } from "../../../services/ClienteServices";
-import { getShows, getSalasId } from "../../../services/publicServices";
+import { getShows, getSalasId, SrcImagen } from "../../../services/publicServices";
 import validarFormulario from "../../../middleware/FormValidation";
 import CloseIcon from "@mui/icons-material/Close";
 import { PhotoCamera } from "@mui/icons-material";
@@ -298,7 +298,7 @@ function Calendario() {
                   borderRadius: 15,
                   boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.5)",
                 }}
-                src={selectedEvent?.imagen}
+                src={SrcImagen(selectedEvent?.imagen)}
                 width="100%"
                 height="100%"
               />
@@ -770,7 +770,7 @@ function Calendario() {
                     key={index}
                   >
                     <ListItemAvatar>
-                      <Avatar alt={`Image ${index}`} src={image.imagen} />
+                      <Avatar alt={`Image ${index}`} src={SrcImagen(image.imagen)} />
                     </ListItemAvatar>
                     <ListItemText
                       primary={image.title}

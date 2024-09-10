@@ -166,7 +166,7 @@ export default function Teatros() {
                       <center>
                         <br />
                         <br />
-                        <Button onClick={sendMessage} variant="contained">
+                        <Button onClick={sendMessage} variant="outlined">
                           <SendIcon /> Comunicar Con Teatro
                         </Button>
                       </center>
@@ -189,7 +189,7 @@ export default function Teatros() {
               <br />
               <Button
                 color="success"
-                variant="contained"
+                variant="outlined"
                 onClick={goGoogleMaps}
               >
                 <LocationOnIcon />
