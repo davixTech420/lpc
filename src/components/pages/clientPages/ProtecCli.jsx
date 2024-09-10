@@ -99,8 +99,8 @@ export default function ProfileViewInteractive() {
         const respoClien = await clienteLogeado();
         setCliente(respoClien.data);
         const vistaDash = await MiShows(respoClien.data.id);
-        setShows(vistaDash);
-        console.log(vistaDash);
+       setShows(vistaDash.data);
+        console.log(vistaDash.data);
         
         const resClienForm = await getClienForm(respoClien.data.id);
         setDatosAdicionales(resClienForm.data);
@@ -158,6 +158,12 @@ export default function ProfileViewInteractive() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (!emailPattern.test(formData.email)) {
+      console.log("Email inválido");
+    }
+    else{
     try{
 const enviar = actualizarCliente(cliente.id,formData);
 
@@ -166,7 +172,7 @@ const enviar = actualizarCliente(cliente.id,formData);
 console.log(error);
     }
     
-    
+  }
     setIsEditing(false);
   };
 
@@ -241,6 +247,7 @@ console.log(error);
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
+                          
                           label="Name"
                           name="name"
                           value={cliente.nombre}
@@ -262,6 +269,14 @@ console.log(error);
                           fullWidth
                           label="nacionCliente"
                           name="nacionCliente"
+                          onKeyPress={(e) => {
+                            if (!/['a-z']/.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}
+                          inputProps={{
+                            maxLength: 20,
+                          }}
                           value={formData.nacionCliente}
                           onChange={handleInputChange}
                         />
@@ -271,6 +286,9 @@ console.log(error);
                           fullWidth
                           label="direccion"
                           name="direccion"
+                          inputProps={{
+                            maxLength: 30,
+                          }}
                           value={formData.direccion}
                           onChange={handleInputChange}
                         />
@@ -280,6 +298,12 @@ console.log(error);
                           fullWidth
                           label="telefono"
                           name="telefono"
+                          onKeyPress={(e) => {
+                            if (!/[0-9]/.test(e.key)) {
+                              e.preventDefault();
+                            }
+                          }}
+                         
                           value={formData.telefono}
                           onChange={handleInputChange}
                         />
@@ -287,10 +311,25 @@ console.log(error);
                       <Grid item xs={12} sm={6}>
                         <TextField
                           fullWidth
+                          type="email"
                           label="email"
                           name="email"
                           value={formData.email}
-                          onChange={handleInputChange}
+                          onChange={(e) => {
+                            const email = e.target.value;
+                            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                        
+                            if (!emailPattern.test(email)) {
+                              console.log("Email inválido");
+                              // Aquí podrías mostrar un mensaje de error al usuario
+                            } else {
+                              console.log("Email válido");
+                        
+                              // Procesa el valor si es válido
+                            }
+                            handleInputChange(e.target.value);
+                           // Esto mantiene la funcionalidad original de cambiar el valor
+                          }}
                         />
                       </Grid>
                       
@@ -319,16 +358,16 @@ console.log(error);
 
                     <Box sx={{ mb: 3 }}>
                       <Typography variant="h6" gutterBottom>
-                        Skills
+                        Mis Shows
                       </Typography>
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                        {profileData.skills.map((skill, index) => (
+                        {profileData.skills.map((show) => (
                           <motion.div
-                            key={skill}
+                            key={show.id}
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                           >
-                            <Chip label={skill} />
+                            <Chip label={show.nombre} />
                           </motion.div>
                         ))}
                       </Box>

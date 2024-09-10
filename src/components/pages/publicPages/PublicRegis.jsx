@@ -148,8 +148,9 @@ export default function PublicRegis() {
     }
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/.test(formData.apellido)) {
       return "El apellido solo debe contener letras";
-    }
-  
+    }if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) { 
+      return "El email no es válido";
+  }
     // Validar identificación solo números
     if (!/^[0-9]+$/.test(formData.identificacion)) {
       return "La identificación solo debe contener números";
