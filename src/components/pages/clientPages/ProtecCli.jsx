@@ -12,14 +12,12 @@ import {
   clienteLogeado, actualizarCliente , MiShows,
   getClienForm,
 } from "../../../services/ClienteServices";
-import { Chip, Paper, LinearProgress, Tooltip } from "@mui/material";
+import { Chip, Paper} from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { motion, AnimatePresence } from "framer-motion";
 import EditIcon from "@mui/icons-material/Edit";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import MailIcon from "@mui/icons-material/Mail";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
+
 import CloseIcon from "@mui/icons-material/Close";
 
 const theme = createTheme({
@@ -78,12 +76,9 @@ export default function ProfileViewInteractive() {
     direccion: "",
   });
   const [formData, setFormData] = useState({
-   /*  nombre: cliente.nombre,
-    apellido: cliente.apellido,
-    tipIdentidad: cliente.tipIdentidad,
-    identificacion: cliente.identificacion, */
-    telefono: "",
-    email: "",
+  
+    telefono: cliente.telefono,
+    email: cliente.email,
     password: cliente.password,
     estado: true,
     nacionCliente: datosAdicionales.nacionCliente,
@@ -130,20 +125,7 @@ export default function ProfileViewInteractive() {
     }
   }, []);
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState({
-    name: "Jane Doe",
-    title: "Senior Software Engineer",
-    location: "San Francisco, CA",
-    company: "Tech Innovators Inc.",
-    education: "Stanford University",
-    bio: "Passionate about creating intuitive and efficient web applications. Experienced in full-stack development with a focus on React and Node.js ecosystems.",
-    skills: ["React", "Node.js", "TypeScript", "GraphQL", "UI/UX Design"],
-    projects: [
-      { name: "E-commerce Platform", progress: 80 },
-      { name: "Social Media Dashboard", progress: 65 },
-      { name: "AI Chatbot", progress: 90 },
-    ],
-  });
+ 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -158,12 +140,7 @@ export default function ProfileViewInteractive() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (!emailPattern.test(formData.email)) {
-      console.log("Email inválido");
-    }
-    else{
+        
     try{
 const enviar = actualizarCliente(cliente.id,formData);
 
@@ -172,7 +149,7 @@ const enviar = actualizarCliente(cliente.id,formData);
 console.log(error);
     }
     
-  }
+  
     setIsEditing(false);
   };
 
@@ -303,7 +280,10 @@ console.log(error);
                               e.preventDefault();
                             }
                           }}
-                         
+                         inputProps={{
+                          maxLength: 10,
+                        }}
+
                           value={formData.telefono}
                           onChange={handleInputChange}
                         />
@@ -321,13 +301,12 @@ console.log(error);
                         
                             if (!emailPattern.test(email)) {
                               console.log("Email inválido");
-                              // Aquí podrías mostrar un mensaje de error al usuario
                             } else {
                               console.log("Email válido");
-                        
-                              // Procesa el valor si es válido
                             }
-                            handleInputChange(e.target.value);
+                            handleInputChange(e);
+                          
+                            
                            // Esto mantiene la funcionalidad original de cambiar el valor
                           }}
                         />
@@ -362,7 +341,7 @@ console.log(error);
                       </Typography>
                       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                       {Shows.length === 0 ? (
-                          <p>No shows available</p>
+                          <p>No Tienes Ningun Show</p>
                         ) : (
                           Shows.map((show) => (
                             <motion.div
@@ -387,7 +366,7 @@ console.log(error);
           </MotionPaper>
         </Box>
       </ThemeProvider>
-      <FooterPublic />
+    
     </>
   );
 }

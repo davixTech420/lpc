@@ -8,7 +8,7 @@ import {
   getShowsSala,
   getSalaJefe,
 } from "../../../services/jefeServices";
-import { Chip, Paper, LinearProgress, Tooltip } from "@mui/material";
+import { Chip, Paper} from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { motion, AnimatePresence } from "framer-motion";
 import EditIcon from "@mui/icons-material/Edit";

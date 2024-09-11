@@ -239,7 +239,7 @@ const TheaterVolcanicLogin = () => {
           </motion.form>
         </Box>
       </Container>
-      <FooterPublic />
+      <FooterPublic  />
     </>
   );
 }

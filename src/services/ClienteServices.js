@@ -59,6 +59,9 @@ export const MiShows = (id) => {
   );
 }
 
+/**
+ * api para el pedido
+ */
 export const crearPedido = (formData) => {
   return axios.post(`${baseUrl}/pedido`, formData,{
     headers: {
@@ -68,6 +71,16 @@ export const crearPedido = (formData) => {
   }
 );
 }
+export const eliminarPedido = (id) => {
+  return axios.delete(`${baseUrl}/pedido/${id}`,{
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    }
+  }
+);
+}
+/** */
+
 export const salasConJefe = () => {
   return axios.get(`${baseUrl}/salaCon`,{
     headers: {

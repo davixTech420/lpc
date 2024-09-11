@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MiShows } from "../../../services/ClienteServices";
+import { MiShows,eliminarPedido } from "../../../services/ClienteServices";
 import { SrcImagen } from '../../../services/publicServices';
 import { jwtDecode } from 'jwt-decode';
 
@@ -16,8 +16,7 @@ import {
   createTheme,
   CssBaseline,
   CardMedia,
-  CardActions,
-  Button,
+ 
   Chip,
   useMediaQuery,
   useTheme,
@@ -30,7 +29,7 @@ import {
   TheaterComedy, 
   Event, 
   AccessTime, 
-  Star 
+
 } from '@mui/icons-material';
 import HeaderPublic from '../../partials/HeaderPublic';
 
@@ -246,7 +245,7 @@ console.log(error);
                           </Typography>
                         </Box>
                         <Box>
-                          <IconButton size="small">
+                          <IconButton size="small" onClick={() => eliminarPedido(show.id) && window.location.reload()}>
                             <DeleteIcon color="error" />
                           </IconButton>
                          

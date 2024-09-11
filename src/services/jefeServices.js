@@ -12,6 +12,15 @@ export const activarPedido = (id) => {
   }
 );
 }
+export const inactivarPedido = (id) => {
+  return axios.put(`${baseUrl}/inacPedido/${id}`,{},{
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    }
+  }
+);
+}
+
 export const eliminarPedido = (id) => {
   return axios.delete(`${baseUrl}/pedido/${id}`,{
     headers: {

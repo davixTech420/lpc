@@ -23,7 +23,7 @@ function nav(path){
 
 
   return (
-    <Box sx={{ color:'white', backgroundColor: '#07575B', padding: '20px' , position: 'center' , bottom: 0, marginTop: 15,borderTopLeftRadius: 50,borderTopRightRadius: 50 ,boxShadow: "10px 10px 10px 10px rgba(0, 0, 0, 0.5)" }}>
+    <Box sx={{ color:'white', backgroundColor: '#07575B', padding: '20px' , position: 'flex' , left:0,right:0, bottom: 0, marginTop: 15,borderTopLeftRadius: 50,borderTopRightRadius: 50 ,boxShadow: "10px 10px 10px 10px rgba(0, 0, 0, 0.5)" }}>
       <Container maxWidth="md">
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>

@@ -36,6 +36,7 @@ import {
   eliminarShow,
   eliminarJefe,
 } from "../../../services/AdminServices";
+import { SrcImagen } from "../../../services/publicServices";
 
 const VistaTabla = () => {
   const { tablaId } = useParams();
@@ -290,11 +291,11 @@ const VistaTabla = () => {
                                         row[column] // Display other values
                                       )
                                     ) : typeof row[column] === "string" &&
-                                      row[column].startsWith("http") ? (
+                                       row[column].startsWith("http")  ? (
                                       <img
                                         width={100}
                                         height={100}
-                                        src={row[column]}
+                                        src={row[column]}  
                                         alt={column}
                                       />
                                     ) : (

@@ -382,25 +382,25 @@ const chartData = shows.length > 0 ?
                 <Paper
                   sx={{
                     p: 2,
-                    display: "flex",
+                  overflowY: "auto",
                     flexDirection: "column",
-                    height: 240,
+                    height: "70%",
                   }}
                 >
                   <center>Jefes De Sala</center>
     <List sx={{ width: '100%', maxWidth: '100%' }}>
-      {jefes.map((jefe) => {
-        const sala = findSalaById(jefe.salaId);
-        return (
-          <React.Fragment key={jefe.id}>
-            <ListItem sx={{ borderBottom: '1px solid #ddd' }}>
-              <ListItemText primary={sala?.nombre || 'Sala no encontrada'} />
-              <ListItemText secondary={jefe.nombre} />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </React.Fragment>
-        );
-      })}
+     {jefes.map((jefe) => {
+      const sala = findSalaById(jefe.salaId);
+      return (
+        <React.Fragment key={jefe.id}>
+          <ListItem sx={{ borderBottom: '1px solid #ddd' }}>
+            <ListItemText primary={sala?.nombre || 'Sala no encontrada'} />
+            <ListItemText secondary={jefe.nombre} />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </React.Fragment>
+      );
+    })} 
     </List>
                 </Paper>
               </Grid>
@@ -412,7 +412,7 @@ const chartData = shows.length > 0 ?
                     display: "flex",
                     position: "relative",
                     flexDirection: "column",
-                    height: "90%",
+                    height: "60%",
                   }}
                 >
                   <center>Salas</center>
@@ -458,7 +458,9 @@ const chartData = shows.length > 0 ?
                     p: 2,
                     display: "flex",
                     flexDirection: "column",
-                    height: "90%",
+                    alignItems: "center",
+                    justifyContent:"center",
+                    height: "60%",
                   }}
                 >
                   <center>Estadísticas Por Mes</center>

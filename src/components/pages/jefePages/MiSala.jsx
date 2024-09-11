@@ -4,7 +4,8 @@ import {
   getSalaJefe,
   getPedidoForm,
   activarPedido,
-  eliminarPedido
+  eliminarPedido,
+  inactivarPedido
 } from "../../../services/jefeServices";
 import { jwtDecode } from "jwt-decode";
 import { SrcImagen } from "../../../services/publicServices";
@@ -37,6 +38,8 @@ import {
   AccessTime,
   ArrowBack,
 } from "@mui/icons-material";
+import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import HeaderPublic from "../../partials/HeaderPublic";
@@ -92,6 +95,8 @@ export default function MiSala() {
   const [editedShowId, setEditedShowId] = useState(null);
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("md"));
+
+
   const handleEditShow = (showId) => {
     setEditedShowId(showId);
     setShowForm(showId);
@@ -314,9 +319,11 @@ export default function MiSala() {
                           >
                             <EditIcon color="info" />
                           </IconButton>
+                          <Button onClick={() => show.estado === false ?  activarPedido(show.id) && window.location.reload()
+                           : inactivarPedido(show.id) && window.location.reload() }>{show.estado === false ? <ToggleOffIcon sx={{ color: "gray" }} /> : <ToggleOnIcon/> }</Button>  
                         </Box>
                       </Box>
-                      <Button onClick={() => activarPedido(show.id) }>Activar Pedido</Button>  
+                      
                                         </Box>
                     
                   ))}

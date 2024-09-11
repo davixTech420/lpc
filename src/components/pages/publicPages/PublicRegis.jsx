@@ -205,8 +205,8 @@ export default function PublicRegis() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+          <Avatar sx={{ m: 1, background: "#07575B" }}>
+            <LockOutlinedIcon sx={{ color: "white" }} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Crear Cuenta
@@ -272,7 +272,7 @@ export default function PublicRegis() {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <FormControl variant="filled" sx={{ minWidth: "100%" }}>
+                <FormControl variant="filled" sx={{ width: "100%", }}>
                   <InputLabel id="demo-simple-select-filled-label">
                     Tipo De Identificacion
                   </InputLabel>
